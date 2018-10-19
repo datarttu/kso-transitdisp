@@ -1,0 +1,105 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    padding: 20px;
+}
+
+.clock {
+    /*height: 60px;*/
+    font-size: 5em;
+    text-align: left;
+    vertical-align: middle;
+    margin-bottom: 15px;
+}
+
+.dep-title {
+    display: flex;
+    align-items: center;
+}
+
+.vehicle-icon {
+    height: 60px;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+.direction-desc {
+    font-size: 2em;
+    text-align: left;
+}
+
+.tram-departures {
+    float: left;
+    width: 49%;
+}
+
+.bus-departures {
+    float: right;
+    width: 49%;
+}
+
+table {
+    width: 100%;
+    height: 100%;
+    font-size: 2.5em;
+}
+
+td, th {
+    height: 60px;
+}
+
+.route_short_name {
+    text-align: left;
+    font-size: 100%;
+    font-weight: bold;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 8px;
+    display: inline;
+    /*width: 15%;*/
+}
+
+.tram {
+    background: #00985F;
+}
+
+.bus {
+    background: #007AC9;
+}
+
+.trip_headsign {
+    text-align: left;
+    font-size: 75%;
+    /*width: 67%;*/
+}
+.notrealtime_sign {
+    text-align: right;
+    font-size: 100%;
+    font-weight: bold;
+    /*width: 5%;*/
+}
+.dep_time_str {
+    text-align: left;
+    font-size: 100%;
+    font-weight: bold;
+    /*width: 13%;*/
+}
+
+
+@keyframes blink {
+   from {
+      opacity: 1;
+   }
+   to {
+      opacity: 0.3;
+   }
+ }
+
+.about-to-True {
+    animation-duration: 800ms;
+    animation-name: blink;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-out;
+}
