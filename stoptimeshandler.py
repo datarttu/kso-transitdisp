@@ -9,23 +9,7 @@ and prepare response contents for website display.
 """
 
 import requests
-#import json
 from datetime import datetime
-
-#def readConfiguration(conf_filename='conf.txt'):
-#    """Read configuration file containing request body
-#    and numeric values,
-#    return dict
-#    """
-#    with open(conf_filename, 'r') as f:
-#        conf = f.readlines()
-#    
-#    # '#' is considered comment beginning
-#    conf = [l for l in conf if not l.startswith('#')]
-#    conf = ''.join(conf)
-#    print(conf)
-#    conf = json.loads(conf)
-#    print(conf)
 
 def getStoptimesFromDigitransit(req_body, sec_offset=180, n_of_deps=15):
     """Send POST request to HSL Digitransit API,
@@ -138,11 +122,6 @@ def makeOrderedStoptimes(json_resp, max_len=10, near_limit=10, about_limit=5):
     tram_ls = sorted(tram_ls, key = lambda x: (x['dep_time_int'], 
                                                x['route_short_name'],
                                                x['trip_headsign']))
-#    for row in tram_ls:
-#        print(row['dep_time_int'])
-#        row.pop('dep_time_int', None)
-#    for row in bus_ls:
-#        row.pop('dep_time_int', None)
         
     if len(tram_ls) > max_len:
         tram_ls = tram_ls[:max_len-1]
