@@ -37,7 +37,7 @@ conf = {
 "start_offset": 180,
 
 # Maximum amount of departure rows to show per div on the page
-"max_departures_to_show": 13,
+"max_departures_to_show": 11,
 
 # Amount of minutes within which departures are considered 'near'
 # and minutes left are shown instead of HH:MM
