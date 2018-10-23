@@ -41,7 +41,11 @@ conf = {
 
 # Amount of minutes within which departures are considered 'near'
 # and minutes left are shown instead of HH:MM
-"near_limit": 10
+"near_limit": 10,
+
+# Amount of minutes within which departures are considered 'about to depart'
+# and minutes left will blink
+"about_limit": 6
 }
         
 ############################
@@ -62,7 +66,8 @@ def departures():
     
     deptimes = makeOrderedStoptimes(resp,
                                     max_len=conf['max_departures_to_show'],
-                                    near_limit=conf['near_limit'])
+                                    near_limit=conf['near_limit'],
+                                    about_limit=conf['about_limit'])
     
     dep_html = makeDepHtml('templates/dep-template.html', deptimes)
     
