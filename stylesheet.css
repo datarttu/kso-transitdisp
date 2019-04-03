@@ -49,15 +49,19 @@ td, th {
     height: 60px;
 }
 
+.route {
+    text-align: right;
+}
+
 .route_short_name {
-    text-align: left;
+    /*text-align: right;*/
     font-size: 100%;
     font-weight: bold;
     padding-left: 8px;
     padding-right: 8px;
+    margin-right: 16px;
     border-radius: 8px;
     display: inline;
-    /*width: 15%;*/
 }
 
 .tram {
@@ -86,7 +90,6 @@ td, th {
     /*width: 13%;*/
 }
 
-
 @keyframes blink {
    0% {opacity: 1;}
    10% {opacity: 1;}
@@ -95,9 +98,15 @@ td, th {
    100% {opacity: 1;}
  }
 
-.about-to-True {
+.near {
     animation-duration: 1500ms;
     animation-name: blink;
     animation-iteration-count: infinite;
     animation-timing-function: ease;
+}
+
+.error {
+    font-size: 1em;
+    text-align: left;
+    color: lightcoral;
 }
