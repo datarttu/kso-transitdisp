@@ -1,67 +1,59 @@
 body {
-    background-color: black;
+    background: black;
     color: white;
     font-family: 'Roboto', sans-serif;
-    padding: 20px;
+    font-size: 24pt;
+    margin: 0px;
+}
+
+.main {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
 }
 
 .clock {
-    /*height: 60px;*/
-    font-size: 5em;
+    font-size: 3em;
+    font-weight: bold;
     text-align: left;
     vertical-align: middle;
     margin-bottom: 15px;
 }
 
-.dep-title {
-    display: flex;
-    align-items: center;
-}
-
-.vehicle-icon {
-    height: 60px;
-    margin-right: 15px;
-    vertical-align: middle;
-}
-
-.direction-desc {
-    font-size: 2em;
-    text-align: left;
-}
-
-.tram-departures {
-    float: left;
-    width: 49%;
-}
-
-.bus-departures {
-    float: right;
-    width: 49%;
+.info-title {
+  text-align: left;
+  vertical-align: middle;
+  margin-bottom: 15px;
+  margin-left: 15px;
 }
 
 table {
     width: 100%;
     height: 100%;
-    font-size: 2.5em;
 }
 
 td, th {
-    height: 60px;
+    /*height: 60px;*/
+    padding-bottom: 0.25em;
 }
 
 .route {
     text-align: right;
+    font-size: 1.5em;
 }
 
 .route_short_name {
     /*text-align: right;*/
-    font-size: 100%;
     font-weight: bold;
     padding-left: 8px;
     padding-right: 8px;
     margin-right: 16px;
     border-radius: 8px;
     display: inline;
+}
+
+.subway {
+    background: #FF6319;
 }
 
 .tram {
@@ -74,20 +66,16 @@ td, th {
 
 .trip_headsign {
     text-align: left;
-    font-size: 75%;
-    /*width: 67%;*/
 }
 .notrealtime_sign {
     text-align: right;
-    font-size: 100%;
+    font-size: 1.5em;
     font-weight: bold;
-    /*width: 5%;*/
 }
 .dep_time_str {
     text-align: left;
-    font-size: 100%;
+    font-size: 1.5em;
     font-weight: bold;
-    /*width: 13%;*/
 }
 
 @keyframes blink {
@@ -109,4 +97,12 @@ td, th {
     font-size: 1em;
     text-align: left;
     color: lightcoral;
+}
+
+.disclaimer {
+    background: lightcoral;
+    padding-left: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 0.75em;
 }

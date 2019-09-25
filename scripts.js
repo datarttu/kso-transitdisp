@@ -11,6 +11,12 @@ author: Arttu K
 3/2019
 */
 
+/*
+Kamppi M -> east        "HSL:1040601"
+Kauppak. tram -> Töölö  "HSL:1130110"
+Kauppak. bus -> Töölö   "HSL:1130438"
+*/
+
 const ENDPOINT = "https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql";
 
 // Change stop selection and number of departures here if needed.
@@ -42,12 +48,12 @@ const NDEPS = 10;
 
 // Departures are requested from +OFFSET_SEC seconds
 // from the moment the request is sent
-const OFFSET_SEC = 180;
+const OFFSET_SEC = 120;
 
 // Departures closer than NEAR_SEC are shown with blinking minutes left,
 // instead of static HH:MM.
 // Time difference is calculated when the request response is parsed.
-const NEAR_SEC = 600;
+const NEAR_SEC = 360;
 
 function zpad(nr) {
   // Zero padding for single-digit numbers in clock times
@@ -139,7 +145,7 @@ function renderDepartures(resp) {
   } catch (e) {
     console.log(e);
     $(".departures").html('<p class="error">Aikatauluja ei voitu hakea.<br><i>' + e.message + "</i></p>");
-  }
+  };
 };
 
 function loadDepartures() {
@@ -151,18 +157,24 @@ function loadDepartures() {
   let req_actual = REQBODY.replace("START_TIME_PLACEHOLDER", timefrom);
   //console.log(req_actual); // REMOVETHIS
 
-  let xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-     let resp = JSON.parse(this.responseText);
-     // TODO pass further to formatter function and show in body
-     renderDepartures(resp);
-     //console.log(resp); // REMOVETHIS
-   }
+  try {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+       let resp = JSON.parse(this.responseText);
+       // TODO pass further to formatter function and show in body
+       renderDepartures(resp);
+       //console.log(resp); // REMOVETHIS
+     }
+    };
+    xhttp.open("POST", ENDPOINT, true);
+    xhttp.setRequestHeader("Content-type", "application/graphql");
+    xhttp.send(req_actual);
+  } catch (e) {
+    console.log(e);
+    $(".departures").html('<p class="error">Aikatauluja ei voitu hakea.<br><i>' + e.message + "</i></p>");
   };
-  xhttp.open("POST", ENDPOINT, true);
-  xhttp.setRequestHeader("Content-type", "application/graphql");
-  xhttp.send(req_actual);
+
 };
 
 function clock() {
