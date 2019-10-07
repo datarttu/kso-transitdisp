@@ -21,13 +21,13 @@ const ENDPOINT = "https://api.digitransit.fi/routing/v1/routers/hsl/index/graphq
 
 // Change stop selection and number of departures here if needed.
 const REQBODY = `{
-                    stops(ids: ["HSL:1130438", "HSL:1130110"]) {
+                    stops(ids: ["HSL:1130438", "HSL:1130110", "HSL:1130446"]) {
                         code
                         lat
                         lon
                         stoptimesWithoutPatterns
                           (startTime: START_TIME_PLACEHOLDER,
-                          numberOfDepartures: 10) {
+                          numberOfDepartures: 17) {
                         realtimeDeparture
                         realtime
                         trip {
@@ -44,7 +44,7 @@ const REQBODY = `{
 // Limit number of departures to show;
 // this is NOT the same as numberOfDepartures above!
 // numberOfDepartures is requested per-stop.
-const NDEPS = 10;
+const NDEPS = 17;
 
 // Departures are requested from +OFFSET_SEC seconds
 // from the moment the request is sent
