@@ -29,6 +29,7 @@ const REQBODY = `{
                           (startTime: START_TIME_PLACEHOLDER,
                           numberOfDepartures: 17) {
                         realtimeDeparture
+                        serviceDay
                         realtime
                         trip {
                             route {
@@ -63,27 +64,23 @@ function zpad(nr) {
     return nr;
   }
 
-function formatDepTime(secs, nowseconds, realtime) {
-  // Format Digitransit-seconds into desired output
-  let time_part = "";
+function formatDepTime(utcsecs, utcnow, realtime) {
+  // Format UTC departure time into desired output
   let tilde_part = "";
+  let time_part = "";
   if (realtime === false) {
     tilde_part = "~";
   };
-  if (secs >= 86400) {
-    secs = secs - 86400;
-  };
-  let diff = Math.abs(secs - nowseconds);
+  let diff = Math.abs(utcsecs - utcnow);
   //console.log(diff, nowseconds); // REMOVETHIS
-  let isnear = false;
   if (diff <= NEAR_SEC) {
     tilde_part = '<td class="notrealtime_sign near">' + tilde_part + "</td>";
-    isnear = true;
-    time_part += '<td class="dep_time_str near">' + Math.floor(diff / 60) + " min" + "</td>";
+    time_part = '<td class="dep_time_str near">' + Math.floor(diff / 60) + " min" + "</td>";
   } else {
     tilde_part = '<td class="notrealtime_sign">' + tilde_part + '</td>';
-    let hourpart = Math.floor(secs / 3600)
-    time_part += '<td class="dep_time_str">' + zpad(hourpart) + ":" + zpad(Math.floor((secs/60) - hourpart*60)) + "</td>";
+    let utcdatetime = new Date(utcsecs * 1000);
+    let datetime_str = zpad(utcdatetime.getHours()) + ':' + zpad(utcdatetime.getMinutes());
+    time_part = '<td class="dep_time_str">' + datetime_str + "</td>";
   };
   return tilde_part + time_part;
 };
@@ -111,8 +108,8 @@ function renderDepRow(dep, nowseconds) {
 };
 
 function compare(a, b) {
-  // For sorting departure objects by departure times in seconds
-  return a.realtimeDeparture - b.realtimeDeparture;
+  // For sorting departure objects by UTC departure times
+  return a.utcDepTime - b.utcDepTime;
 };
 
 function renderDepartures(resp) {
@@ -132,6 +129,10 @@ function renderDepartures(resp) {
         dep["stopcode"] = stopcode;
         departures.push(dep);
       };
+    };
+    // Calculate full UTC timestamp of departure by service day and timestamp from midnight
+    for (let i = 0; i < departures.length; i++) {
+      departures[i]["utcDepTime"] = departures[i].serviceDay + departures[i].realtimeDeparture
     };
     departures.sort(compare);
     departures = departures.slice(0, NDEPS);
