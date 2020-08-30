@@ -22,8 +22,6 @@ function condLog(msg, urlParameters = urlParams) {
     console.log(msg);
   };
 };
-console.log('This is logged anyway');
-condLog('This is logged only if debug=true');
 
 /**
  * Read comma-separated stop ids from client URL.
@@ -229,27 +227,29 @@ function createRequestBody(
   }`;
 };
 
+/**
+ * Request stop departure times from Digitransit HSL GraphQL API
+ * and render them to the document .departures div.
+ */
 function loadDepartures() {
-  // This function makes the final departures request
-  // and passes the response to formatter functions
-  // that write the result table to the document .departures div
-  let req_actual = createRequestBody();
+  let requestBody = createRequestBody();
 
   try {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
        let resp = JSON.parse(this.responseText);
-       // TODO pass further to formatter function and show in body
+       condLog(resp);
        renderDepartures(resp);
-       //console.log(resp); // REMOVETHIS
      }
     };
-    xhttp.open("POST", ENDPOINT, true);
+    xhttp.open(
+      method = "POST",
+      url = "https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql");
     xhttp.setRequestHeader("Content-type", "application/graphql");
-    xhttp.send(req_actual);
+    xhttp.send(requestBody);
   } catch (e) {
-    console.log(e);
+    console.error(e);
     $(".departures").html('<p class="error">Aikatauluja ei voitu hakea.<br><i>' + e.message + "</i></p>");
   };
 
