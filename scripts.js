@@ -53,11 +53,6 @@ const REQBODY = `{
 // numberOfDepartures is requested per-stop.
 const NDEPS = 17;
 
-// Departures closer than NEAR_SEC are shown with blinking minutes left,
-// instead of static HH:MM.
-// Time difference is calculated when the request response is parsed.
-const NEAR_SEC = 360;
-
 function zpad(nr) {
   // Zero padding for single-digit numbers in clock times
     if (nr < 10) {
@@ -66,7 +61,7 @@ function zpad(nr) {
     return nr;
   };
 
-function formatDepTime(utcsecs, utcnow, realtime) {
+function formatDepTime(utcsecs, utcnow, realtime, nearSeconds = 360) {
   // Format UTC departure time into desired output
   let tilde_part = "";
   let time_part = "";
@@ -75,7 +70,7 @@ function formatDepTime(utcsecs, utcnow, realtime) {
   };
   let diff = Math.abs(utcsecs - utcnow);
   //console.log(diff, nowseconds); // REMOVETHIS
-  if (diff <= NEAR_SEC) {
+  if (diff <= nearSeconds) {
     tilde_part = '<td class="notrealtime_sign near">' + tilde_part + "</td>";
     time_part = '<td class="dep_time_str near">' + Math.floor(diff / 60) + " min" + "</td>";
   } else {
