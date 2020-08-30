@@ -38,8 +38,6 @@ function formatStopsForQueryString(
     return '[' + quotedStopsWithFeedId.join(', ') + ']';
   };
 
-console.log(formatStopsForQueryString());
-
 /*
 Stop times request to Digitransit API to be made once a minute
 and the HH:MM:SS clock.
@@ -60,29 +58,6 @@ Kauppak. bus -> Töölö   "HSL:1130438"
 */
 
 const ENDPOINT = "https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql";
-
-// Change stop selection and number of departures here if needed.
-const REQBODY = `{
-                    stops(ids: ["HSL:1130438", "HSL:1130110", "HSL:1130446"]) {
-                        code
-                        name
-                        desc
-                        stoptimesWithoutPatterns
-                          (startTime: START_TIME_PLACEHOLDER,
-                          numberOfDepartures: 17) {
-                        realtimeDeparture
-                        serviceDay
-                        realtime
-                        trip {
-                            route {
-                            shortName
-                            mode
-                            }
-                        }
-                        headsign
-                        }
-                    }
-                }`;
 
 // Limit number of departures to show;
 // this is NOT the same as numberOfDepartures above!
@@ -193,13 +168,46 @@ function nowPlusOffset(offsetSec = 120) {
   return nowSeconds + offsetSec;
 };
 
+/**
+ * Create the GraphQL request body for stop times.
+ * @param   {string}  stopIdsParam      stop id selection string
+ * @param   {int}     stopTimesFromTime UNIX seconds time to request stop times from
+ * @param   {int}     numDepsPerStop    number of departures to request from each stop
+ * @return  {string}                    Body string ready for a QraphQL request
+ */
+function createRequestBody(
+  stopIdsParam = formatStopsForQueryString(),
+  stopTimesFromTime = nowPlusOffset(),
+  numDepsPerStop = 17
+) {
+  return `{
+    stops(ids: ${stopIdsParam}) {
+        code
+        name
+        desc
+        stoptimesWithoutPatterns
+          (startTime: ${stopTimesFromTime},
+          numberOfDepartures: ${numDepsPerStop}) {
+        realtimeDeparture
+        serviceDay
+        realtime
+        trip {
+            route {
+            shortName
+            mode
+            }
+        }
+        headsign
+        }
+    }
+  }`;
+};
+
 function loadDepartures() {
   // This function makes the final departures request
   // and passes the response to formatter functions
   // that write the result table to the document .departures div
-  let timefrom = nowPlusOffset();
-  let req_actual = REQBODY.replace("START_TIME_PLACEHOLDER", timefrom);
-  //console.log(req_actual); // REMOVETHIS
+  let req_actual = createRequestBody();
 
   try {
     let xhttp = new XMLHttpRequest();
