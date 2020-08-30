@@ -155,12 +155,22 @@ function renderDepartures(resp) {
   };
 };
 
+/**
+ * Get current UNIX seconds with offset seconds added.
+ * @param  {int} offsetSec  number of seconds to add to current timestamp
+ * @return {int}            Unix seconds of current timestamp + offset seconds
+ */
+function nowPlusOffset(offsetSec = 120) {
+  let timestampNow = new Date();
+  let nowSeconds = Math.floor(timestampNow.getTime() / 1000);
+  return nowSeconds + offsetSec;
+};
+
 function loadDepartures() {
   // This function makes the final departures request
   // and passes the response to formatter functions
   // that write the result table to the document .departures div
-  let timenow = new Date();
-  let timefrom = Math.floor(timenow.getTime() / 1000) + OFFSET_SEC;
+  let timefrom = nowPlusOffset();
   let req_actual = REQBODY.replace("START_TIME_PLACEHOLDER", timefrom);
   //console.log(req_actual); // REMOVETHIS
 
