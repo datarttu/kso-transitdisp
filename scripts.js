@@ -11,10 +11,26 @@ function getURLParams() {
 const urlParams = getURLParams();
 
 /**
+ * Conditional logging:
+ * call console.log only if the URL has debug=true parameter.
+ * To enable logging, add debug=true to the URL parameters.
+ * @param {string}          msg           string to pass to console.log()
+ * @param {URLSearchParams} urlParameters parameters read from client URL
+ */
+function condLog(msg, urlParameters = urlParams) {
+  if (urlParameters.has('debug') && urlParameters.get('debug') === 'true') {
+    console.log(msg);
+  };
+};
+console.log('This is logged anyway');
+condLog('This is logged only if debug=true');
+
+/**
  * Read comma-separated stop ids from client URL.
  * Example: ?stops=1040601,1130110,1130438
  * Note that stop ids are not validated in any way.
  * Any comma-separated element after ?stops= will be returned.
+ * @param {URLSearchParams} urlParameters parameters read from client URL
  * @return {Array} Array of stop ids
  */
 function getStopsFromURL(urlParameters = urlParams) {
