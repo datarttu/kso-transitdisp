@@ -1,3 +1,16 @@
+/*
+Stop times request to Digitransit API to be made once a minute
+and the HH:MM:SS clock.
+See https://digitransit.fi/en/developers/apis/1-routing-api/stops/
+for endpoint and request details.
+Alternative queries as well as further stops
+can be explored using GraphiQL:
+https://digitransit.fi/en/developers/apis/1-routing-api/1-graphiql/
+
+author: Arttu K
+3/2019
+*/
+
 /**
  * Return parameters from the client URL.
  * @return {URLSearchParams}  Parameters and their values read from the client URL
@@ -61,19 +74,6 @@ function formatStopsForQueryString(
     let quotedStopsWithFeedId = stopIds.map(i => '"' + feedId + ':' + i + '"');
     return '[' + quotedStopsWithFeedId.join(', ') + ']';
   };
-
-/*
-Stop times request to Digitransit API to be made once a minute
-and the HH:MM:SS clock.
-See https://digitransit.fi/en/developers/apis/1-routing-api/stops/
-for endpoint and request details.
-Alternative queries as well as further stops
-can be explored using GraphiQL:
-https://digitransit.fi/en/developers/apis/1-routing-api/1-graphiql/
-
-author: Arttu K
-3/2019
-*/
 
 /*
 Kamppi M -> east        "HSL:1040601"
