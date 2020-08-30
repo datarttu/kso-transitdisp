@@ -25,7 +25,26 @@ function getStopsFromURL() {
   return stopArray;
 };
 
-console.log(getStopsFromURL());
+/**
+ * Prefix stop ids with a feed id, and combine them into a parameter value
+ * string for Digitransit GraphQL query body.
+ * @param   {string}  feedId  feed id, defaults to 'HSL'
+ * @param   {Array}   stopIds stop ids as string array, by default from client URL
+ * @return  {string}          stop list parameter value ready for QraphQL query body
+ */
+function formatStopsForQueryString(
+  feedId = 'HSL',
+  stopIds = getStopsFromURL()
+) {
+    if (!stopIds) {
+      console.error('No stop ids given');
+      return null;
+    };
+    let quotedStopsWithFeedId = stopIds.map(i => '"' + feedId + ':' + i + '"');
+    return '[' + quotedStopsWithFeedId.join(', ') + ']';
+  };
+
+console.log(formatStopsForQueryString());
 
 /*
 Stop times request to Digitransit API to be made once a minute
