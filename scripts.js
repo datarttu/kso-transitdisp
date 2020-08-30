@@ -53,10 +53,6 @@ const REQBODY = `{
 // numberOfDepartures is requested per-stop.
 const NDEPS = 17;
 
-// Departures are requested from +OFFSET_SEC seconds
-// from the moment the request is sent
-const OFFSET_SEC = 120;
-
 // Departures closer than NEAR_SEC are shown with blinking minutes left,
 // instead of static HH:MM.
 // Time difference is calculated when the request response is parsed.
