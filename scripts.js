@@ -68,7 +68,7 @@ function zpad(nr) {
       nr = '0' + nr
     }
     return nr;
-  }
+  };
 
 function formatDepTime(utcsecs, utcnow, realtime) {
   // Format UTC departure time into desired output
