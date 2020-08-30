@@ -75,19 +75,6 @@ function formatStopsForQueryString(
     return '[' + quotedStopsWithFeedId.join(', ') + ']';
   };
 
-/*
-Kamppi M -> east        "HSL:1040601"
-Kauppak. tram -> Töölö  "HSL:1130110"
-Kauppak. bus -> Töölö   "HSL:1130438"
-*/
-
-const ENDPOINT = "https://api.digitransit.fi/routing/v1/routers/hsl/index/graphql";
-
-// Limit number of departures to show;
-// this is NOT the same as numberOfDepartures above!
-// numberOfDepartures is requested per-stop.
-const NDEPS = 17;
-
 function zpad(nr) {
   // Zero padding for single-digit numbers in clock times
     if (nr < 10) {
