@@ -65,8 +65,8 @@ const ENDPOINT = "https://api.digitransit.fi/routing/v1/routers/hsl/index/graphq
 const REQBODY = `{
                     stops(ids: ["HSL:1130438", "HSL:1130110", "HSL:1130446"]) {
                         code
-                        lat
-                        lon
+                        name
+                        desc
                         stoptimesWithoutPatterns
                           (startTime: START_TIME_PLACEHOLDER,
                           numberOfDepartures: 17) {
