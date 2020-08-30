@@ -4,6 +4,29 @@ const urlParams = new URLSearchParams(queryStringInURL);
 const stopListString = urlParams.get('stops');
 console.log(stopListString);
 
+/**
+ * Read comma-separated stop ids from client URL.
+ * Example: ?stops=1040601,1130110,1130438
+ * Note that stop ids are not validated in any way.
+ * Any comma-separated element after ?stops= will be returned.
+ * @return {Array} Array of stop ids
+ */
+function getStopsFromURL() {
+  let queryStringInURL = window.location.search;
+  let urlParams = new URLSearchParams(queryStringInURL);
+
+  if (!urlParams.has('stops')) {
+    console.error('Missing `stops` parameter from URL');
+    return null;
+  };
+
+  let stopListString = urlParams.get('stops');
+  let stopArray = stopListString.split(',');
+  return stopArray;
+};
+
+console.log(getStopsFromURL());
+
 /*
 Stop times request to Digitransit API to be made once a minute
 and the HH:MM:SS clock.
