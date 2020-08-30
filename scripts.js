@@ -1,9 +1,3 @@
-const queryStringInURL = window.location.search;
-console.log(queryStringInURL);
-const urlParams = new URLSearchParams(queryStringInURL);
-const stopListString = urlParams.get('stops');
-console.log(stopListString);
-
 /**
  * Read comma-separated stop ids from client URL.
  * Example: ?stops=1040601,1130110,1130438
