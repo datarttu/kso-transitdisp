@@ -38,16 +38,15 @@ td, th {
 }
 
 .route {
-    text-align: right;
+    text-align: left;
     font-size: 1.5em;
 }
 
 .route_short_name {
-    /*text-align: right;*/
     font-weight: bold;
     padding-left: 8px;
     padding-right: 8px;
-    margin-right: 16px;
+    margin-right: 8px;
     border-radius: 8px;
     display: inline;
 }

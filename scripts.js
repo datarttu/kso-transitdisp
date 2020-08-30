@@ -109,6 +109,9 @@ function renderDepRow(dep, nowseconds) {
   // Render a <tr> for departure object
   let output = "<tr>";
 
+  // Departure time
+  output += formatDepTime(dep.realtimeDeparture, nowseconds, dep.realtime);
+
   // Line number / short name
   output += '<td class="route"><div class="route_short_name ' + dep.trip.route.mode.toLowerCase();
   output += '">' + dep.trip.route.shortName + "</div></td>";
@@ -116,8 +119,6 @@ function renderDepRow(dep, nowseconds) {
   // Headsign
   output += '<td class="trip_headsign">' + dep.headsign + '</td>';
 
-  // Departure time
-  output += formatDepTime(dep.realtimeDeparture, nowseconds, dep.realtime);
   output += "</tr>\n";
   return output;
   } catch(e) {
@@ -154,7 +155,8 @@ function renderDepartures(resp) {
       departures[i]["utcDepTime"] = departures[i].serviceDay + departures[i].realtimeDeparture
     };
     departures.sort(compare);
-    departures = departures.slice(0, NDEPS);
+    // TODO: Replace 17 with window height dependent value!
+    departures = departures.slice(0, 17);
     //console.log(departures);
     let htmlout = "<table>";
     for (i = 0; i < departures.length; i++) {
