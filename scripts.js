@@ -1,3 +1,9 @@
+const queryStringInURL = window.location.search;
+console.log(queryStringInURL);
+const urlParams = new URLSearchParams(queryStringInURL);
+const stopListString = urlParams.get('stops');
+console.log(stopListString);
+
 /*
 Stop times request to Digitransit API to be made once a minute
 and the HH:MM:SS clock.
