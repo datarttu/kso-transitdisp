@@ -121,7 +121,7 @@ function renderDepRow(dep, nowseconds) {
   output += "</tr>\n";
   return output;
   } catch(e) {
-    console.log(e);
+    console.error(e);
     return "";
   };
 };
