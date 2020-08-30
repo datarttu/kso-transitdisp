@@ -1,20 +1,30 @@
 /**
+ * Return parameters from the client URL.
+ * @return {URLSearchParams}  Parameters and their values read from the client URL
+ */
+function getURLParams() {
+  let queryStringInURL = window.location.search;
+  let parameters = new URLSearchParams(queryStringInURL);
+  return parameters;
+};
+
+const urlParams = getURLParams();
+
+/**
  * Read comma-separated stop ids from client URL.
  * Example: ?stops=1040601,1130110,1130438
  * Note that stop ids are not validated in any way.
  * Any comma-separated element after ?stops= will be returned.
  * @return {Array} Array of stop ids
  */
-function getStopsFromURL() {
-  let queryStringInURL = window.location.search;
-  let urlParams = new URLSearchParams(queryStringInURL);
+function getStopsFromURL(urlParameters = urlParams) {
 
-  if (!urlParams.has('stops')) {
+  if (!urlParameters.has('stops')) {
     console.error('Missing `stops` parameter from URL');
     return null;
   };
 
-  let stopListString = urlParams.get('stops');
+  let stopListString = urlParameters.get('stops');
   let stopArray = stopListString.split(',');
   return stopArray;
 };
